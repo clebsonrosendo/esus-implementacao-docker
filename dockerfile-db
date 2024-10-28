@@ -1,0 +1,15 @@
+# Usando a imagem oficial do PostgreSQL na versão 9.6.13 com Alpine Linux
+FROM postgres:9.6.13-alpine
+
+# Informações do autor e versão da configuração
+LABEL author="Clebson Rosendo"
+LABEL name="esus-db"
+LABEL version="1.0"
+
+# Definindo variáveis de ambiente para configurar o banco de dados
+ENV POSTGRES_DB=esus
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=esus
+
+# Expondo a porta padrão do PostgreSQL
+EXPOSE 5432

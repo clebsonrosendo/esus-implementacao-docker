@@ -1,0 +1,38 @@
+
+services:
+  # Serviço do banco de dados PostgreSQL
+  banco:
+    image: esus-db
+    build:
+      context: .
+      dockerfile: ./dockerfile-db
+    environment:
+      - POSTGRES_DB=esus
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=esus
+    ports:
+      - "5432:5432"
+    networks:
+      - esus-network
+
+  # Serviço da aplicação
+  aplicacao:
+    image: esus-pec
+    build:
+      context: .
+      dockerfile: ./dockerfile-app
+    environment:
+      - APP_DB_URL=jdbc:postgresql://banco:5432/esus
+      - APP_DB_USER=postgres
+      - APP_DB_PASSWORD=esus
+    ports:
+      - "8080:8080"
+    networks:
+      - esus-network
+    depends_on:
+      - banco
+
+# Definição da rede compartilhada
+networks:
+  esus-network:
+    driver: bridge
